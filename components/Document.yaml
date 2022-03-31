@@ -1,0 +1,31 @@
+    Doucument:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 1
+        user_id: 
+          type: integer
+          example: 1
+        documentable_type: 
+          type: string
+          example: App\Customer
+        documentable_id: 
+          type: integer
+          example: 1 
+        fileName: 
+          type: string
+          example: contract.pdf 
+        mimeType: 
+          type: string
+          example: application/pdf 
+        fileDescription: 
+          type: string
+          example: Signed contract 
+        shared: 
+          type: boolean
+          example: true 
+      required:
+        - id
+        - fileName
+        - fileDescription

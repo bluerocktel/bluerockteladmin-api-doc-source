@@ -1,0 +1,84 @@
+    Contact:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 4
+        contactable_type:
+          type: string
+          example: App\Customer
+        contactable_id:
+          type: integer
+          example: 1
+        civility:
+          type: integer
+          example: 2
+        firstName: 
+          type: string
+          example: John
+        lastName: 
+          type: string
+          example: Doe
+        emailAddress:
+          type: string
+          example: john.doe@bluerocktel.net
+        mobilePhone:
+          type: string
+          example: +353yy
+        landlinePhone:
+          type: string
+          example: +353xx
+        role:
+          type: string
+          example: General manager
+        profunction_id:
+          type: integer
+          example: 1
+        service:
+          type: string
+          example: Direction
+        active: 
+          type: boolean
+          example: true
+        legalRepresentative: 
+          type:  boolean
+          example: true
+        invoicesRecipient: 
+          type: boolean
+          example: true
+        myClient: 
+          type: boolean
+          example: true
+        myClientAdmin: 
+          type: boolean
+          example: true
+        myClientAdvancedServices:
+          type: boolean
+          example : false
+        myClientSms:
+          type: boolean
+          example: true
+        technicalContact: 
+          type: boolean
+          example: true
+        ticketingDoNotNotify:
+          type: boolean
+          example: true
+        ticketingCopyToSales:
+          type: boolean
+          example: true
+        newslettersRecipient: 
+          type: boolean
+          example: true
+        api:
+          type: boolean
+          example: true
+        familiarity: 
+          type: string
+          example: Vous
+        comment:
+          type: string
+          example: Great guy
+      required:
+        - id
+        - lastName

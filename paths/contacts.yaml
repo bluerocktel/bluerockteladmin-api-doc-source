@@ -1,0 +1,220 @@
+  /v1/contacts:
+    get:
+      summary: Returns contacts.
+      description: Returns a list of contacts for the specified contactable.
+      operationId: get-contacts
+      tags:
+        - Contacts
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+        - schema:
+            type: string
+          in: query
+          name: contactable_type
+        - schema:
+            type: integer
+          in: query
+          name: contactable_id
+      responses:
+        '200':
+          description: a JSON array of contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 4
+                  firstname:
+                    type: string
+                    example: Jessica Smith
+        '400':
+          description: Bad request.
+        '404':
+          description: The specified contactable_id of contactable_type was not found.
+    post:
+      summary: Store a new contact.
+      description: Store a new contact for the specified contactable.
+      operationId: post-contacts
+      tags:
+        - Contacts
+      responses:
+        '200':
+          description: a object containing the contact
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Store a new contact'
+              type: object
+              properties:
+                lastName:
+                  type: string
+                  minLength: 1
+                firstName:
+                  type: string
+                  minLength: 1
+              required:
+                - lastName
+                - firstName
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/contacts/{contact}:
+    get:
+      summary: Retrieves a contact.
+      description : Retrieves the details of the specified contact.
+      operationId: get-contacts-contact
+      tags:
+        - Contacts
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: contact
+        in: path
+        required: true
+    put:
+      summary: Update a contact.
+      description: Update the details of the specified contact.
+      operationId: put-contacts-contact
+      tags: 
+        - Contacts
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  minLength: 1
+                lastName:
+                  type: string
+                  minLength: 1
+              required:
+                - firstName
+                - lastName
+              x-examples:
+                example-1:
+                  firstName: John
+                  lastName: Doe
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+    delete:
+      summary: Delete a contact.
+      description: Delete the specified contact.
+      operationId: delete-contacts-contact
+      tags:
+        - Contacts
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: not found
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/contacts/{contact}/coworkers:
+    get:
+      summary: Returns coworkers.
+      description : Retrieves the coworkers of the specified contact.
+      operationId: get-contacts-contact-coworkers
+      tags:
+        - Contacts
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: contact
+        in: path
+        required: true
+  /v1/contacts/numbers:
+    get:
+      summary: Retrieves a contact by phone number.
+      description : Retrieves a contact by phone number.
+      operationId: get-contacts-numbers
+      tags:
+        - Contacts
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: phoneNumber
+        in: query
+        required: true

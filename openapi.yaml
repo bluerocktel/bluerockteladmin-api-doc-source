@@ -1,0 +1,710 @@
+openapi: 3.0.3
+info:
+  title: 'BlueRockTEL Admin API'
+  version: '1.0'
+  description: 'Documentation for the BlueRockTEL Admin API'
+  contact: 
+    name: BlueRockTEL API Team
+    url: https://api-admin.bluerocktel.com
+    email: team-api@bluerocktel.com
+servers:
+  - url: 'https://telecom0558-admin.bluerocktel.net'
+    description: 'API Demo Server'
+paths:
+  /v1/contacts:
+    get:
+      summary: Returns contacts.
+      description: Returns a list of contacts for the specified contactable.
+      operationId: get-contacts
+      tags:
+        - Contacts
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+        - schema:
+            type: string
+          in: query
+          name: contactable_type
+        - schema:
+            type: integer
+          in: query
+          name: contactable_id
+      responses:
+        '200':
+          description: a JSON array of contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 4
+                  firstname:
+                    type: string
+                    example: Jessica Smith
+        '400':
+          description: Bad request.
+        '404':
+          description: The specified contactable_id of contactable_type was not found.
+    post:
+      summary: Store a new contact.
+      description: Store a new contact for the specified contactable.
+      operationId: post-contacts
+      tags:
+        - Contacts
+      responses:
+        '200':
+          description: a object containing the contact
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Store a new contact'
+              type: object
+              properties:
+                lastName:
+                  type: string
+                  minLength: 1
+                firstName:
+                  type: string
+                  minLength: 1
+              required:
+                - lastName
+                - firstName
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/contacts/{contact}:
+    get:
+      summary: Retrieves a contact.
+      description : Retrieves the details of the specified contact.
+      operationId: get-contacts-contact
+      tags:
+        - Contacts
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: contact
+        in: path
+        required: true
+    put:
+      summary: Update a contact.
+      description: Update the details of the specified contact.
+      operationId: put-contacts-contact
+      tags: 
+        - Contacts
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  minLength: 1
+                lastName:
+                  type: string
+                  minLength: 1
+              required:
+                - firstName
+                - lastName
+              x-examples:
+                example-1:
+                  firstName: John
+                  lastName: Doe
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+    delete:
+      summary: Delete a contact.
+      description: Delete the specified contact.
+      operationId: delete-contacts-contact
+      tags:
+        - Contacts
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: not found
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/contacts/{contact}/coworkers:
+    get:
+      summary: Returns coworkers.
+      description : Retrieves the coworkers of the specified contact.
+      operationId: get-contacts-contact-coworkers
+      tags:
+        - Contacts
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: contact
+        in: path
+        required: true
+  /v1/contacts/numbers:
+    get:
+      summary: Retrieves a contact by phone number.
+      description : Retrieves a contact by phone number.
+      operationId: get-contacts-numbers
+      tags:
+        - Contacts
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: phoneNumber
+        in: query
+        required: true
+  /v1/customers:
+    get:
+      summary: Returns customers.
+      description: Returns a list of customers (paginated).
+      operationId: get-customers
+      tags:
+        - Customers
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+        - schema:
+            type: integer
+          in: query
+          name: page
+      responses:
+        '200':
+          description: a JSON array of customers
+          content:
+            application/json:
+              schema:
+                type: array
+        '400':
+          description: Bad request.
+        '404':
+          description: The specified contactable_id of contactable_type was not found.
+    post:
+      summary: Store a new customer.
+      description: Store a new customer.
+      operationId: post-customers
+      tags:
+        - Customers
+      responses:
+        '200':
+          description: a object containing the customer
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Store a new customer'
+              type: object
+              properties:
+                lastName:
+                  type: string
+                  minLength: 1
+                firstName:
+                  type: string
+                  minLength: 1
+              required:
+                - lastName
+                - firstName
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/customers/{customer}:
+    get:
+      summary: Retrieves a customer.
+      description : Retrieves the details of the specified customer.
+      operationId: get-customers-customer
+      tags:
+        - Customers
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: customer
+        in: path
+        required: true
+    put:
+      summary: Update a customer.
+      description: Update the details of the specified customer.
+      operationId: put-customers-customer
+      tags: 
+        - Customers
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  minLength: 1
+                lastName:
+                  type: string
+                  minLength: 1
+              required:
+                - firstName
+                - lastName
+              x-examples:
+                example-1:
+                  firstName: John
+                  lastName: Doe
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+    delete:
+      summary: Delete a customer
+      description: Delete the specified customer.
+      operationId: delete-customers-customer
+      tags:
+        - Customers
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: not found
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/documents:
+    get:
+      summary: Returns documents.
+      description: Returns a list of documents for the specified documentable.
+      operationId: get-documents
+      tags:
+        - Documents
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+        - schema:
+            type: string
+          in: query
+          name: documentable_type
+        - schema:
+            type: integer
+          in: query
+          name: ducumentable_id
+      responses:
+        '200':
+          description: a JSON array of documents
+          content:
+            application/json:
+              schema:
+                type: array
+        '400':
+          description: Bad request.
+        '404':
+          description: The specified documentable_id of documentable_type was not found.
+    post:
+      summary: Store a new document.
+      description: Store a new document for the specified documentable.
+      operationId: post-documents
+      tags:
+        - Documents
+      responses:
+        '201':
+          description: a object containing the document
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Store a new document'
+              type: object
+              properties:
+                lastName:
+                  type: string
+                  minLength: 1
+                firstName:
+                  type: string
+                  minLength: 1
+              required:
+                - fileName
+                - fileDescription
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/documents/{document}:
+    get:
+      summary: Retrieves the document information.
+      description : Retrieves the document information.
+      operationId: get-documents-document
+      tags:
+        - Documents
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: document
+        in: path
+        required: true
+    put:
+      summary: Update a document.
+      description: Update the details of the specified document.
+      operationId: put-documents-document
+      tags: 
+        - Documents
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  minLength: 1
+                lastName:
+                  type: string
+                  minLength: 1
+              required:
+                - documentName
+                - documentDescription
+              x-examples:
+                example-1:
+                  firstName: John
+                  lastName: Doe
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+    delete:
+      summary: Delete a document.
+      description: Delete the specified document.
+      operationId: delete-documents-document
+      tags:
+        - Documents
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: not found
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/documents/{document}/content:
+    get:
+      summary: Returns document.
+      description : Retrieves the document.
+      operationId: get-documents-document-content
+      tags:
+        - Documents
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: document
+        in: path
+        required: true
+components:
+  schemas:
+    Contact:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 4
+        contactable_type:
+          type: string
+          example: App\Customer
+        contactable_id:
+          type: integer
+          example: 1
+        civility:
+          type: integer
+          example: 2
+        firstName: 
+          type: string
+          example: John
+        lastName: 
+          type: string
+          example: Doe
+        emailAddress:
+          type: string
+          example: john.doe@bluerocktel.net
+        mobilePhone:
+          type: string
+          example: +353yy
+        landlinePhone:
+          type: string
+          example: +353xx
+        role:
+          type: string
+          example: General manager
+        profunction_id:
+          type: integer
+          example: 1
+        service:
+          type: string
+          example: Direction
+        active: 
+          type: boolean
+          example: true
+        legalRepresentative: 
+          type:  boolean
+          example: true
+        invoicesRecipient: 
+          type: boolean
+          example: true
+        myClient: 
+          type: boolean
+          example: true
+        myClientAdmin: 
+          type: boolean
+          example: true
+        myClientAdvancedServices:
+          type: boolean
+          example : false
+        myClientSms:
+          type: boolean
+          example: true
+        technicalContact: 
+          type: boolean
+          example: true
+        ticketingDoNotNotify:
+          type: boolean
+          example: true
+        ticketingCopyToSales:
+          type: boolean
+          example: true
+        newslettersRecipient: 
+          type: boolean
+          example: true
+        api:
+          type: boolean
+          example: true
+        familiarity: 
+          type: string
+          example: Vous
+        comment:
+          type: string
+          example: Great guy
+      required:
+        - id
+        - lastName
+    Customer:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 4
+        brand_id:
+          type: integer
+          example: 1
+        representative_id:
+          type: integer
+          example: 1
+        customerAccount:
+          type: string
+          example: CL0001
+        accountReference:
+          type: string
+          example: 411CL0001
+        name:
+          type: string
+          example: BlueRockTEL
+        brand:
+          type: string
+          example: CX-Engine
+      required:
+        - id
+        - name
+    Doucument:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 1
+        user_id: 
+          type: integer
+          example: 1
+        documentable_type: 
+          type: string
+          example: App\Customer
+        documentable_id: 
+          type: integer
+          example: 1 
+        fileName: 
+          type: string
+          example: contract.pdf 
+        mimeType: 
+          type: string
+          example: application/pdf 
+        fileDescription: 
+          type: string
+          example: Signed contract 
+        shared: 
+          type: boolean
+          example: true 
+      required:
+        - id
+        - fileName
+        - fileDescription
+tags:
+  - name: Contacts
+  - name: Customers
+  - name: Documents
+  # - name: CustomerBankDetails
+  

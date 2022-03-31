@@ -1,0 +1,181 @@
+  /v1/documents:
+    get:
+      summary: Returns documents.
+      description: Returns a list of documents for the specified documentable.
+      operationId: get-documents
+      tags:
+        - Documents
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+        - schema:
+            type: string
+          in: query
+          name: documentable_type
+        - schema:
+            type: integer
+          in: query
+          name: ducumentable_id
+      responses:
+        '200':
+          description: a JSON array of documents
+          content:
+            application/json:
+              schema:
+                type: array
+        '400':
+          description: Bad request.
+        '404':
+          description: The specified documentable_id of documentable_type was not found.
+    post:
+      summary: Store a new document.
+      description: Store a new document for the specified documentable.
+      operationId: post-documents
+      tags:
+        - Documents
+      responses:
+        '201':
+          description: a object containing the document
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Store a new document'
+              type: object
+              properties:
+                lastName:
+                  type: string
+                  minLength: 1
+                firstName:
+                  type: string
+                  minLength: 1
+              required:
+                - fileName
+                - fileDescription
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/documents/{document}:
+    get:
+      summary: Retrieves the document information.
+      description : Retrieves the document information.
+      operationId: get-documents-document
+      tags:
+        - Documents
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: document
+        in: path
+        required: true
+    put:
+      summary: Update a document.
+      description: Update the details of the specified document.
+      operationId: put-documents-document
+      tags: 
+        - Documents
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  minLength: 1
+                lastName:
+                  type: string
+                  minLength: 1
+              required:
+                - documentName
+                - documentDescription
+              x-examples:
+                example-1:
+                  firstName: John
+                  lastName: Doe
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+    delete:
+      summary: Delete a document.
+      description: Delete the specified document.
+      operationId: delete-documents-document
+      tags:
+        - Documents
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: not found
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/documents/{document}/content:
+    get:
+      summary: Returns document.
+      description : Retrieves the document.
+      operationId: get-documents-document-content
+      tags:
+        - Documents
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: document
+        in: path
+        required: true

@@ -1,0 +1,27 @@
+    Customer:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 4
+        brand_id:
+          type: integer
+          example: 1
+        representative_id:
+          type: integer
+          example: 1
+        customerAccount:
+          type: string
+          example: CL0001
+        accountReference:
+          type: string
+          example: 411CL0001
+        name:
+          type: string
+          example: BlueRockTEL
+        brand:
+          type: string
+          example: CX-Engine
+      required:
+        - id
+        - name

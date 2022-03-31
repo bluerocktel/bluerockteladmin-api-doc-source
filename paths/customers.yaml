@@ -1,0 +1,146 @@
+  /v1/customers:
+    get:
+      summary: Returns customers.
+      description: Returns a list of customers (paginated).
+      operationId: get-customers
+      tags:
+        - Customers
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+        - schema:
+            type: integer
+          in: query
+          name: page
+      responses:
+        '200':
+          description: a JSON array of customers
+          content:
+            application/json:
+              schema:
+                type: array
+        '400':
+          description: Bad request.
+        '404':
+          description: The specified contactable_id of contactable_type was not found.
+    post:
+      summary: Store a new customer.
+      description: Store a new customer.
+      operationId: post-customers
+      tags:
+        - Customers
+      responses:
+        '200':
+          description: a object containing the customer
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: 'Store a new customer'
+              type: object
+              properties:
+                lastName:
+                  type: string
+                  minLength: 1
+                firstName:
+                  type: string
+                  minLength: 1
+              required:
+                - lastName
+                - firstName
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+  /v1/customers/{customer}:
+    get:
+      summary: Retrieves a customer.
+      description : Retrieves the details of the specified customer.
+      operationId: get-customers-customer
+      tags:
+        - Customers
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: customer
+        in: path
+        required: true
+    put:
+      summary: Update a customer.
+      description: Update the details of the specified customer.
+      operationId: put-customers-customer
+      tags: 
+        - Customers
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  minLength: 1
+                lastName:
+                  type: string
+                  minLength: 1
+              required:
+                - firstName
+                - lastName
+              x-examples:
+                example-1:
+                  firstName: John
+                  lastName: Doe
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+    delete:
+      summary: Delete a customer
+      description: Delete the specified customer.
+      operationId: delete-customers-customer
+      tags:
+        - Customers
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: not found
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
