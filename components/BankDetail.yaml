@@ -1,0 +1,24 @@
+    BankDetails:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 1
+        iban:
+          type: string
+          example: IE67BOFI90AAAABBBBCCCC
+        bic:
+          type: string
+          example: BOFIIE2D 
+        mandateIdentification:
+          type: string
+          example: cus000_xyz 
+        active:
+          type: boolean
+          example: true 
+        forbidden:
+          type: boolean
+          example: false 
+      required:
+        - iban
+        - bic

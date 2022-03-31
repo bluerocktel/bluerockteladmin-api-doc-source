@@ -1,0 +1,76 @@
+  /v1/bank-details/{bank-detail}:
+    get:
+      summary: Retrieves the bank details.
+      description : Retrieves the bank details.
+      operationId: get-bankdetails-bankdetails
+      tags:
+        - BankDetails
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+    parameters:
+      - schema:
+          type: string
+        name: bank-detail
+        in: path
+        required: true
+    put:
+      summary: Update the bank details.
+      description: Update the bank details.
+      operationId: put-bankdetails-bankdetails
+      tags: 
+        - BankDetails
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  minLength: 1
+                lastName:
+                  type: string
+                  minLength: 1
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
+    delete:
+      summary: Delete bank details.
+      description: Delete the specified bank details.
+      operationId: delete-bankdetails-bankdetails
+      tags:
+        - BankDetails
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: not found
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer
