@@ -628,6 +628,34 @@ paths:
         name: document
         in: path
         required: true
+  /v1/helpers/3cxCountries:
+    get:
+      summary: Returns the 3cx countries list.
+      description: Returns the 3cx countries list.
+      operationId: get-3cx-countries
+      tags:
+        - 3cx
+      responses:
+        '200':
+          description: a JSON array of continents and countries
+          content:
+            application/json:
+              schema:
+                type: array
+  /v1/helpers/3cxOpenDestinations:
+    get:
+      summary: Returns the 3cx open destinations.
+      description: Returns the 3cx open destinations.
+      operationId: get-3cx-open-destinations
+      tags:
+        - 3cx
+      responses:
+        '200':
+          description: a JSON array of continents and countries
+          content:
+            application/json:
+              schema:
+                type: array
 components:
   schemas:
     BankDetails:
@@ -801,4 +829,4 @@ tags:
   - name: Contacts
   - name: Customers
   - name: Documents
-  
+  - name: 3cx

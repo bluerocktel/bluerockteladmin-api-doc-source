@@ -1,0 +1,14 @@
+  /v1/helpers/3cxOpenDestinations:
+    get:
+      summary: Returns the 3cx open destinations.
+      description: Returns the 3cx open destinations.
+      operationId: get-3cx-open-destinations
+      tags:
+        - 3cx
+      responses:
+        '200':
+          description: a JSON array of continents and countries
+          content:
+            application/json:
+              schema:
+                type: array
